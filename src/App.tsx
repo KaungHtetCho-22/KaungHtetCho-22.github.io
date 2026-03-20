@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './index.css'
 
 function App() {
   const [isLightMode, setIsLightMode] = useState(false);
