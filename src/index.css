@@ -207,14 +207,14 @@ header {
 }
 .hero h1 {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(60px, 12vw, 130px);
-  line-height: 0.92;
+  font-size: clamp(48px, 10vw, 120px);
+  line-height: 0.85;
   color: var(--white);
-  letter-spacing: 0.02em;
-  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
   text-transform: uppercase;
 }
-.hero h1 span { color: var(--accent); }
+.hero h1 span { color: var(--accent); display: block; }
 .hero-sub {
   font-family: 'Fraunces', serif;
   font-style: italic;
@@ -397,12 +397,31 @@ header {
   flex: 1; text-align: center; font-family: sans-serif;
   font-size: 13px; color: var(--muted); font-weight: 500; letter-spacing: 0.05em;
 }
-.ide-body { display: flex; flex-direction: row; min-height: 450px; }
-@media (max-width: 768px) {
-  .ide-body { flex-direction: column; }
-  .ide-sidebar { width: 100% !important; border-right: none !important; border-bottom: 1px solid var(--border); }
+.ide-body { display: flex; flex-direction: row; min-height: 500px; }
+@media (max-width: 850px) {
+  .ide-body { flex-direction: column; min-height: auto; }
+  .ide-sidebar { 
+    width: 100% !important; 
+    border-right: none !important; 
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+  .ide-explorer-title { display: none; }
+  .ide-file {
+    white-space: nowrap;
+    padding: 8px 16px;
+    border-left: none !important;
+    border-bottom: 2px solid transparent;
+  }
+  .ide-file.active {
+    background: rgba(255,255,255,0.06);
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+  }
 }
-.ide-sidebar { width: 260px; background: var(--black); border-right: 1px solid var(--border); padding: 20px 0; }
+.ide-sidebar { width: 280px; background: var(--black); border-right: 1px solid var(--border); padding: 20px 0; flex-shrink: 0; }
 .ide-explorer-title { font-size: 11px; letter-spacing: 0.15em; color: var(--muted); padding: 0 20px 16px; font-weight: 600; }
 .ide-file {
   padding: 10px 20px; font-size: 14px; color: var(--muted); cursor: pointer;
@@ -605,70 +624,78 @@ html, body {
 }
 @media (max-width: 768px) {
   header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 30px 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0;
+    margin-bottom: 24px;
   }
+  .logo { font-size: 20px; }
   .nav-links {
-    flex-wrap: wrap;
-    gap: 16px;
+    display: none; /* Simplify for mobile to focus on content */
+  }
+  .wrapper {
+    padding: 0 20px 60px;
+  }
+  .hero {
+    padding: 40px 0 60px;
+  }
+  .hero-tag {
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    font-size: 18px;
+    margin-top: 16px;
+  }
+  .verdict {
+    margin: 40px 0;
+    padding: 32px 20px;
+  }
+  .verdict-name {
+    font-size: 36px;
+  }
+  .section {
+    margin: 60px 0;
+  }
+  .section-num {
+    font-size: 40px;
+  }
+  .section-title {
+    font-size: 24px;
   }
   .ide-content {
-    padding: 24px;
+    padding: 24px 16px;
   }
   .terminal-line {
     font-size: 13px;
-    overflow-wrap: anywhere;
+    margin-bottom: 12px;
   }
   .term-title {
     font-size: 24px !important;
   }
-  .term-desc, .term-meta {
-    font-size: 14px !important;
-  }
-  .verdict, .cert-card {
-    padding: 32px 24px;
-  }
-  .verdict-name {
-    font-size: 32px;
-  }
-  .verdict-desc, .tl-body {
-    font-size: 15px;
-  }
-  .hero h1 {
-    font-size: 14vw;
-  }
-  .section-title {
-    font-size: 28px;
-  }
-  .stack-table tbody, .stack-table tr, .stack-table td {
-    display: block;
-    width: 100%;
+  .term-desc {
+    font-size: 15px !important;
+    margin-bottom: 20px;
   }
   .stack-table td:first-child {
+    width: 100%;
     padding-bottom: 8px;
     padding-left: 0;
     padding-top: 20px;
   }
-  .stack-table td:last-child {
-    padding-left: 0 !important;
-    padding-bottom: 24px;
-    padding-top: 0;
-  }
   .final-cta {
-    padding: 60px 24px;
+    padding: 60px 20px;
+    margin-top: 60px;
   }
   .final-cta h2 {
-    font-size: 48px;
+    font-size: 40px;
   }
   .final-cta p {
     font-size: 18px;
   }
   .cta-button {
-    padding: 16px 24px;
+    padding: 16px 32px;
     font-size: 14px;
     width: 100%;
-    margin-bottom: 12px;
   }
 }
