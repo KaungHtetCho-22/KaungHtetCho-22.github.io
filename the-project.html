@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Project That Gets You Hired</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --off: #111318;
+    --card: #14171f;
+    --border: #1e2330;
+    --accent: #e8ff47;
+    --accent2: #ff6b35;
+    --accent3: #4dffb8;
+    --muted: #5a6070;
+    --text: #c8cdd8;
+    --white: #f0f2f7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  .wrapper { max-width: 900px; margin: 0 auto; padding: 0 24px 120px; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 96px);
+    line-height: 0.92;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--muted);
+    max-width: 520px;
+    margin-top: 20px;
+    font-weight: 300;
+  }
+
+  /* VERDICT BOX */
+  .verdict {
+    margin: 48px 0;
+    padding: 28px 32px;
+    border: 1px solid var(--accent);
+    background: linear-gradient(135deg, rgba(232,255,71,0.04), transparent);
+    position: relative;
+  }
+  .verdict::before {
+    content: 'THE VERDICT';
+    position: absolute; top: -10px; left: 20px;
+    background: var(--black);
+    color: var(--accent);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    padding: 0 8px;
+  }
+  .verdict-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .verdict-name em {
+    color: var(--accent2);
+    font-style: normal;
+  }
+  .verdict-desc {
+    margin-top: 14px;
+    color: var(--text);
+    font-size: 14px;
+    max-width: 620px;
+  }
+
+  /* WHY BOX */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin: 48px 0;
+    border: 1px solid var(--border);
+  }
+  .why-cell {
+    background: var(--card);
+    padding: 24px;
+  }
+  .why-cell .label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .why-cell .value {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--white);
+    font-weight: 300;
+  }
+  .why-cell .value strong {
+    color: var(--accent3);
+    font-weight: 700;
+    font-style: normal;
+  }
+  @media (max-width: 600px) { .why-grid { grid-template-columns: 1fr; } }
+
+  /* SECTION */
+  .section { margin: 56px 0; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--border);
+    line-height: 1;
+    user-select: none;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--white);
+    letter-spacing: 0.04em;
+  }
+
+  /* STACK TABLE */
+  .stack-table { width: 100%; border-collapse: collapse; }
+  .stack-table tr { border-bottom: 1px solid var(--border); }
+  .stack-table tr:last-child { border-bottom: none; }
+  .stack-table td {
+    padding: 14px 0;
+    vertical-align: top;
+  }
+  .stack-table td:first-child {
+    width: 160px;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-right: 20px;
+    padding-top: 16px;
+  }
+  .stack-table td:last-child { color: var(--text); }
+  .tag {
+    display: inline-block;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 11px;
+    padding: 3px 9px;
+    margin: 3px 3px 3px 0;
+    font-family: 'DM Mono', monospace;
+  }
+  .tag.accent { border-color: var(--accent); color: var(--accent); }
+  .tag.orange { border-color: var(--accent2); color: var(--accent2); }
+  .tag.green { border-color: var(--accent3); color: var(--accent3); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 8px; bottom: 8px;
+    width: 1px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 28px; }
+  .tl-item::before {
+    content: '';
+    position: absolute; left: -28px; top: 7px;
+    width: 8px; height: 8px;
+    border: 1px solid var(--accent);
+    background: var(--black);
+  }
+  .tl-day {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .tl-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    color: var(--white);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .tl-body { color: var(--muted); font-size: 13px; }
+
+  /* SIGNAL TABLE */
+  .signal-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .signal-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--card);
+    padding: 16px 20px;
+  }
+  .signal-icon { font-size: 18px; width: 28px; flex-shrink: 0; }
+  .signal-text { flex: 1; color: var(--text); font-size: 13px; }
+  .signal-text strong { color: var(--white); }
+  .signal-pill {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid;
+    flex-shrink: 0;
+  }
+  .pill-high { border-color: var(--accent); color: var(--accent); }
+  .pill-mid { border-color: var(--accent2); color: var(--accent2); }
+  .pill-low { border-color: var(--muted); color: var(--muted); }
+
+  /* EXISTING MOATS */
+  .moat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 12px;
+  }
+  .moat-box .moat-title {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--white);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .moat-box .moat-body { color: var(--muted); font-size: 13px; }
+  .moat-box .moat-tag { color: var(--accent3); font-size: 11px; margin-bottom: 6px; }
+
+  /* FINAL */
+  .final-cta {
+    margin-top: 56px;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(232,255,71,0.06), rgba(77,255,184,0.04));
+    border: 1px solid var(--accent);
+    text-align: center;
+  }
+  .final-cta h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+  .final-cta p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="hero">
+    <div class="hero-tag">2026 AI Engineer Career Strategy · Built for Andy</div>
+    <h1>The Project<br>That Makes<br><span>Every Company</span><br>Want You</h1>
+    <p class="hero-sub">One project. Every signal a hiring manager looks for. Built within your 6GB VRAM budget.</p>
+  </div>
+
+  <div class="verdict">
+    <div class="verdict-name">Production <em>AI Agent</em><br>Orchestration Platform</div>
+    <div class="verdict-desc">
+      A multi-agent system that takes a natural language goal, breaks it into subtasks, routes them to specialized agents (RAG, code execution, web search, tool calls), tracks state across steps, and returns a grounded, cited final answer — deployed end-to-end with FastAPI + React + Docker, with full observability via MLflow/LangSmith.
+    </div>
+  </div>
+
+  <!-- WHY THIS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-title">Why This Project, Specifically</div>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-cell">
+        <div class="label">Market Signal</div>
+        <div class="value">AI Engineer is the <strong>#1 fastest-growing job title</strong> on LinkedIn in 2026. Postings up 143% YoY. Supply is still tiny.</div>
+      </div>
+      <div class="why-cell">
+        <div class="label">The Gap Companies Can't Fill</div>
+        <div class="value">Most candidates can train models <em>or</em> deploy them. <strong>Almost nobody bridges both</strong> with production-grade infra.</div>
+      </div>
+      <div class="why-cell">
+        <div class="label">What Agentic AI Specialists Earn</div>
+        <div class="value">Agentic AI roles: <strong>$100k–$180k</strong> (UK £100k–£180k). One of the fastest-emerging and highest-paying AI niches in 2026.</div>
+      </div>
+      <div class="why-cell">
+        <div class="label">Why Your Background Fits</div>
+        <div class="value">Your RAG system, local LLM deployment, and FastAPI+React+Tauri stack means <strong>you already have 70% of the pieces</strong>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT TO BUILD -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-title">Exactly What to Build</div>
+    </div>
+
+    <table class="stack-table">
+      <tr>
+        <td>Core Concept</td>
+        <td>A <strong style="color:var(--white)">ReAct-style multi-agent loop</strong>: one orchestrator LLM plans and delegates; specialist agents execute. The user types a goal in plain English. The system figures out the rest.</td>
+      </tr>
+      <tr>
+        <td>Orchestrator</td>
+        <td>
+          <span class="tag accent">Qwen2.5-7B-Instruct Q4_K_M</span>
+          <span class="tag accent">llama.cpp / Ollama</span><br>
+          <span style="color:var(--muted); font-size:13px;">Already proven on your RTX 3060. No cloud costs.</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Specialist Agents</td>
+        <td>
+          <span class="tag">RAG Agent</span> — pulls from Qdrant vector store (reuse DocRAG)<br>
+          <span class="tag">Code Agent</span> — writes + executes Python in a sandbox<br>
+          <span class="tag">Search Agent</span> — web search with citation tracking<br>
+          <span class="tag">Summarizer Agent</span> — compresses long context
+        </td>
+      </tr>
+      <tr>
+        <td>State & Memory</td>
+        <td>
+          <span class="tag orange">Redis</span> for short-term session state &nbsp;
+          <span class="tag orange">SQLite</span> for task history<br>
+          <span style="color:var(--muted); font-size:13px;">Shows you understand stateful agent design, not just stateless API wrappers.</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Backend</td>
+        <td>
+          <span class="tag green">FastAPI</span>
+          <span class="tag green">WebSockets</span> for streaming agent thoughts live<br>
+          <span class="tag green">Docker Compose</span> — API + Qdrant + Redis in one command
+        </td>
+      </tr>
+      <tr>
+        <td>Frontend</td>
+        <td>
+          <span class="tag green">React + TypeScript</span><br>
+          Live "agent thought stream" panel showing which agent is running, what it's doing, and confidence.<br>
+          <span style="color:var(--muted); font-size:13px;">This is what makes the demo visually stunning for hiring managers.</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Observability</td>
+        <td>
+          <span class="tag">MLflow</span> for run tracking &nbsp;
+          <span class="tag">Prometheus + Grafana</span> for latency/token dashboards<br>
+          <span style="color:var(--muted); font-size:13px;">Shows production mindset. 90% of candidates skip this. You won't.</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Eval Suite</td>
+        <td>
+          <span class="tag">Ragas</span> for RAG quality &nbsp;
+          <span class="tag">Custom benchmark</span> on 50 multi-step tasks<br>
+          <span style="color:var(--muted); font-size:13px;">Quantified results in your README = instant credibility.</span>
+        </td>
+      </tr>
+      <tr>
+        <td>VRAM Budget</td>
+        <td>
+          <span style="color:var(--accent3)">✓ Stays within 6GB.</span> Orchestrator runs in llama.cpp with GGUF quant. Agents are lightweight tool-call wrappers. No fine-tuning required.
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- BUILD TIMELINE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-title">10-Day Build Timeline</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-day">Day 1–2</div>
+        <div class="tl-title">Orchestrator Core</div>
+        <div class="tl-body">ReAct loop with Qwen2.5 via llama.cpp. Basic tool dispatch (no agents yet). Test with 10 hardcoded tasks. FastAPI skeleton up.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Day 3</div>
+        <div class="tl-title">RAG Agent + Code Agent</div>
+        <div class="tl-body">Plug in your existing Qdrant RAG from DocRAG. Add sandboxed Python execution agent (subprocess + timeout). Wire into orchestrator.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Day 4</div>
+        <div class="tl-title">State Layer + Search Agent</div>
+        <div class="tl-body">Redis for session memory. SQLite task history. Add web search agent (DuckDuckGo API or SerpAPI free tier) with citation pass-through.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Day 5–6</div>
+        <div class="tl-title">React Frontend + WebSocket Streaming</div>
+        <div class="tl-body">Live agent thought stream. Task status panel. Final answer with cited sources. Mobile-responsive. This is what you screenshot for LinkedIn.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Day 7</div>
+        <div class="tl-title">Docker Compose + MLflow</div>
+        <div class="tl-body">One-command local deploy. MLflow tracking per run. Latency metrics. Containerize everything. README with `docker compose up` as Step 1.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Day 8–9</div>
+        <div class="tl-title">Eval Suite + Benchmark</div>
+        <div class="tl-body">50 multi-step test cases. Ragas scores for RAG agent. Task completion rate for orchestrator. Put the numbers in the README prominently.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day">Day 10</div>
+        <div class="tl-title">Portfolio Polish</div>
+        <div class="tl-body">Production README with architecture diagram, demo GIF, and benchmark table. HuggingFace Spaces demo. LinkedIn post with 3-minute screen recording.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIRING SIGNALS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-title">Hiring Signals This Sends</div>
+    </div>
+    <div class="signal-grid">
+      <div class="signal-row">
+        <div class="signal-icon">⚡</div>
+        <div class="signal-text"><strong>Agentic AI architecture</strong> — the hottest and least-understood skillset in AI engineering right now</div>
+        <div class="signal-pill pill-high">Critical</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-icon">🚀</div>
+        <div class="signal-text"><strong>Prototype → Production bridge</strong> — the gap 80% of ML engineers can't cross</div>
+        <div class="signal-pill pill-high">Critical</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-icon">🔭</div>
+        <div class="signal-text"><strong>Observability + Evals</strong> — signals senior engineering instincts, not just hacker mindset</div>
+        <div class="signal-pill pill-high">Critical</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-icon">🧱</div>
+        <div class="signal-text"><strong>Full-stack ownership</strong> — backend, infra, frontend, ML, deployment — one person, one repo</div>
+        <div class="signal-pill pill-mid">Strong</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-icon">💰</div>
+        <div class="signal-text"><strong>Cost-conscious design</strong> — 100% local, no cloud spend, 6GB VRAM constraint solved elegantly</div>
+        <div class="signal-pill pill-mid">Strong</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-icon">📐</div>
+        <div class="signal-text"><strong>Quantified results</strong> — task completion %, latency P95, Ragas scores in the README</div>
+        <div class="signal-pill pill-mid">Strong</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT STACKS WITH EXISTING PROJECTS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div class="section-title">How Your Existing Projects Stack As Proof</div>
+    </div>
+
+    <div class="moat-box">
+      <div class="moat-tag">→ Feeds into this project directly</div>
+      <div class="moat-title">DocRAG — Document Intelligence RAG Platform</div>
+      <div class="moat-body">Your RAG agent is already built. Plug Qdrant + FastAPI inference server directly in. Saves 2 days of work and shows modularity.</div>
+    </div>
+    <div class="moat-box">
+      <div class="moat-tag">→ Proves deployment-grade thinking</div>
+      <div class="moat-title">LocalCowork Lite — On-Device AI Agent</div>
+      <div class="moat-body">Already shows llama.cpp + Qwen2.5 + Docker expertise. Mention it as prior art in this project's README. Compounds credibility.</div>
+    </div>
+    <div class="moat-box">
+      <div class="moat-tag">→ Proves multimodal ambition</div>
+      <div class="moat-title">V-JEPA 2 Interpretability — Video World Model</div>
+      <div class="moat-body">Finishes the portfolio's research credibility arc. Shows you understand model internals, not just API wrappers. Keep on track.</div>
+    </div>
+    <div class="moat-box">
+      <div class="moat-tag">→ Proves domain differentiation</div>
+      <div class="moat-title">Burmese Voice-to-Voice AI Companion</div>
+      <div class="moat-body">Low-resource language + production latency target + real product thinking. Southeast Asian AI market is under-served. This is your moat nobody else has.</div>
+    </div>
+  </div>
+
+  <!-- FINAL -->
+  <div class="final-cta">
+    <h2>The Stack That<br>Gets You the Call</h2>
+    <p>Multi-agent orchestration. Local deployment. Full observability. Quantified evals. Every company building AI products in 2026 needs exactly this person.</p>
+  </div>
+
+</div>
+</body>
+</html>
